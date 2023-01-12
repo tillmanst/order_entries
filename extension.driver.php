@@ -222,7 +222,7 @@
 		 * {@inheritDoc}
 		 */
 		public function uninstall() {
-			Symphony::Database()->query("DROP TABLE `tbl_fields_order_entries`");
+			return Symphony::Database()->query("DROP TABLE IF EXISTS `tbl_fields_order_entries`");
 		}
 		
 		/**
@@ -294,7 +294,7 @@
 		 */
 		public function install() {
 			return Symphony::Database()->query("
-				CREATE TABLE `tbl_fields_order_entries` (
+				CREATE TABLE IF NOT EXISTS `tbl_fields_order_entries` (
 					`id` int(11) unsigned NOT NULL auto_increment,
 					`field_id` int(11) unsigned NOT NULL,
 					`force_sort` enum('yes','no') default 'no',
@@ -303,7 +303,7 @@
 					`filtered_fields` varchar(255) DEFAULT NULL,
 					PRIMARY KEY  (`id`),
 					UNIQUE KEY `field_id` (`field_id`)
-				) TYPE=MyISAM
+				) ENGINE=MyISAM;
 			");
 		}
 			
